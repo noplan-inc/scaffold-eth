@@ -33,7 +33,6 @@ abstract contract Abs_L1TokenGateway is iOVM_L1ERC721ETHGateway, OVM_CrossDomain
      ***************/
 
     /**
-     * @param _l2DepositedToken iOVM_L2DepositedToken-compatible address on the chain being deposited into.
      * @param _l1messenger L1 Messenger address being used for cross-chain communications.
      */
     constructor(
@@ -55,11 +54,9 @@ abstract contract Abs_L1TokenGateway is iOVM_L1ERC721ETHGateway, OVM_CrossDomain
      * In most cases, this will simply send locked funds to the withdrawer.
      *
      * @param _to Address being withdrawn to.
-     * @param _amount Amount being withdrawn.
      */
     function _handleFinalizeWithdrawal(
-        address _to,
-        uint256 _amount
+        address _to
     )
     internal
     virtual
@@ -94,7 +91,6 @@ abstract contract Abs_L1TokenGateway is iOVM_L1ERC721ETHGateway, OVM_CrossDomain
      * This call will fail if the initialized withdrawal from L2 has not been finalized.
      *
      * @param _to L1 address to credit the withdrawal to
-     * @param _amount Amount of the ERC20 to withdraw
      */
     function finalizeWithdrawal(
         address _to

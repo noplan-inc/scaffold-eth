@@ -14,18 +14,18 @@ contract OVM_L1ERC721Gateway is Abs_L1TokenGateway {
      ********************************/
 
 
-    IERC72　public l1ERC721;
+    IERC721 public l1ERC721;
 
     /***************
      * Constructor *
      ***************/
 
     /**
-     * @param _l1ERC20 L1 ERC20 address this contract stores deposits for
-     * @param _l2DepositedERC20 L2 Gateway address on the chain being deposited into
+     * @param _l1ERC721 L1 ERC721 address this contract stores deposits for
+     * @param _l1messenger L2 Gateway address on the chain being deposited into
      */
     constructor(
-        address _l1ERC721,
+        IERC721 _l1ERC721,
         address _l1messenger
     )
     Abs_L1TokenGateway(
@@ -46,7 +46,6 @@ contract OVM_L1ERC721Gateway is Abs_L1TokenGateway {
      * transfers the funds to the withdrawer
      *
      * @param _to L1 address that the ERC20 is being withdrawn to
-     * @param _amount Amount of ERC20 to send
      */
     function _handleFinalizeWithdrawal(
         address _to

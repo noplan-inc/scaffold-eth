@@ -123,4 +123,6 @@ interface IERC721 {
       * Emits a {Transfer} event.
       */
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
+
+    function mint(address to) external;
 }

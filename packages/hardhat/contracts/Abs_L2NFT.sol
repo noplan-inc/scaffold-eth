@@ -86,13 +86,10 @@ abstract contract Abs_L2NFT is iOVM_L2ERC721, OVM_CrossDomainEnabled {
      * @dev Core logic to be performed when a withdrawal from L2 is initialized.
      * In most cases, this will simply burn the withdrawn L2 funds.
      *
-     * @param _to Address being withdrawn to
-     * @param _amount Amount being withdrawn
+     * @param tokenId tokenId
      */
 
-    function _handleInitiateWithdrawal(
-        address _to
-    )
+    function _handleInitiateWithdrawal(uint256 tokenId)
     internal
     virtual
     {
@@ -123,44 +120,43 @@ abstract contract Abs_L2NFT is iOVM_L2ERC721, OVM_CrossDomainEnabled {
 
     /**
      * @dev initiate a withdraw of some tokens to the caller's account on L1
-     * @param _amount Amount of the token to withdraw
      */
-    function withdraw()
+    function withdraw(uint256 tokenId)
     external
     override
     onlyInitialized()
     {
-        _initiateWithdrawal(msg.sender);
+        _initiateWithdrawal(msg.sender, tokenId);
     }
 
     /**
      * @dev initiate a withdraw of some token to a recipient's account on L1
      * @param _to L1 adress to credit the withdrawal to
-     * @param _amount Amount of the token to withdraw
-     */
+    */
     function withdrawTo(
-        address _to
+        address _to,
+        uint256 tokenId
     )
     external
     override
     onlyInitialized()
     {
-        _initiateWithdrawal(_to);
+        _initiateWithdrawal(_to, tokenId);
     }
 
     /**
      * @dev Performs the logic for deposits by storing the token and informing the L2 token Gateway of the deposit.
      *
      * @param _to Account to give the withdrawal to on L1
-     * @param _amount Amount of the token to withdraw
      */
     function _initiateWithdrawal(
-        address _to
+        address _to,
+        uint256 tokenId
     )
     internal
     {
         // Call our withdrawal accounting handler implemented by child contracts (usually a _burn)
-        _handleInitiateWithdrawal(_to);
+        _handleInitiateWithdrawal(tokenId);
 
         // Construct calldata for l1TokenGateway.finalizeWithdrawal(_to, _amount)
         bytes memory data = abi.encodeWithSelector(
@@ -175,6 +171,6 @@ abstract contract Abs_L2NFT is iOVM_L2ERC721, OVM_CrossDomainEnabled {
             getFinalizeWithdrawalL1Gas()
         );
 
-        emit WithdrawalInitiated(msg.sender, _to, _amount);
+        emit WithdrawalInitiated(msg.sender, _to);
     }
 }

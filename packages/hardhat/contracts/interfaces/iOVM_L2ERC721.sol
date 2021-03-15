@@ -13,15 +13,8 @@ interface iOVM_L2ERC721 {
 
     event WithdrawalInitiated(
         address indexed _from,
-        address _to,
-        uint256 _amount
+        address _to
     );
-
-    event DepositFinalized(
-        address indexed _to,
-        uint256 _amount
-    );
-
 
     /********************
      * Public Functions *
@@ -33,17 +26,6 @@ interface iOVM_L2ERC721 {
     external;
 
     function withdrawTo(
-        address _to,
-        uint _amount
-    )
-    external;
-
-
-    /*************************
-     * Cross-chain Functions *
-     *************************/
-
-    function finalizeDeposit(
         address _to,
         uint _amount
     )

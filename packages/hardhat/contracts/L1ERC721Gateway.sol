@@ -4,7 +4,8 @@ pragma solidity >0.5.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 /* Interface Imports */
-import "./OVM_L1ERC721Gateway.sol";
+import { OVM_L1ERC721Gateway } from "./OVM_L1ERC721Gateway.sol";
+import { IERC721 } from "./interfaces/IERC721.sol";
 
 /**
  * @title OVM_L1ERC20Gateway
@@ -22,7 +23,7 @@ import "./OVM_L1ERC721Gateway.sol";
  */
 contract L1ERC721Gateway is OVM_L1ERC721Gateway {
     constructor(
-        address _l1ERC721,
+        IERC721 _l1ERC721,
         address _l1messenger
     )
     OVM_L1ERC721Gateway(

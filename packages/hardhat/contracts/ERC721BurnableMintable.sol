@@ -1,7 +1,10 @@
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract NFL is ERC721 {
-    constructor() ERC721("NFT form L2", "NFL") {
+contract ERC721BurnableMintable is ERC721 {
+    constructor(
+        string memory _name,
+        string memory _symbol
+    ) ERC721(_name, _symbol) {
     }
 
     function mint(address _to)

@@ -4,8 +4,8 @@ pragma experimental ABIEncoderV2;
 
 /* Library Imports */
 import { OVM_L2DepositedERC20 } from "@eth-optimism/contracts/build/contracts/OVM/bridge/tokens/OVM_L2DepositedERC20.sol";
-import "./Abs_L2NFT.sol";
-import "./ERC721.sol";
+import { Abs_L2NFT } from "./Abs_L2NFT.sol";
+import { ERC721BurnableMintable } from "./ERC721BurnableMintable.sol";
 
 /**
  * @title L2DepositedERC20
@@ -16,7 +16,7 @@ import "./ERC721.sol";
  * Compiler used: optimistic-solc
  * Runtime target: OVM
  */
-contract OVM_L2ERC721 is Abs_L2NFT, NFL {
+contract OVM_L2ERC721 is Abs_L2NFT, ERC721BurnableMintable {
 
     constructor(
         address _l2CrossDomainMessenger,
@@ -25,16 +25,14 @@ contract OVM_L2ERC721 is Abs_L2NFT, NFL {
     )
     public
     Abs_L2NFT(_l2CrossDomainMessenger)
-    NFL(_name, _symbol)
+    ERC721BurnableMintable(_name, _symbol)
     {}
 
     // When a withdrawal is initiated, we burn the withdrawer's funds to prevent subsequent L2 usage.
-    function _handleInitiateWithdrawal(
-        address _to
-    )
+    function _handleInitiateWithdrawal(uint256 tokenId)
     internal
     override
     {
-        _burn(msg.sender, _amount);
+        burn(tokenId);
     }
 }
